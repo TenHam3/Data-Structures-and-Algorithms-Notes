@@ -31,4 +31,27 @@ Static Arrays are fixed size arrays that cannot resize when adding or removing v
 
 ### Dynamic Arrays
 
+Dynamic Arrays are dynamically sized arrays that resize themselves if you add an element when at full capacity or remove an element at low capacity
+- It does this by reconstructing a new array that is typically double the size of the original array and copying all the original elements from that array into the new one and freeing the memory that the old array was taking up. It then adds/removes the element the user wanted to before resizing
+- The doubling in size makes pushing/popping an element take O(n) time on average because you wouldn't have to keep reconstructing the array after every push/pop
+  - The amount of operations it takes to reconstruct an array by doubling is always dominated by the most recent reconstruction, meaning that the amount of operations it takes to reconstruct an array is always greater than or equal to the sum of the amount of operations it took from previous reconstructions. This also means the total sum of all operations it took to reconstruct the array into the latest size is less than or equal to twice the amount of operations the latest reconstruction took
+    - Pushing an arbitrary n number of elements takes O(2n) time, which reduces to O(n) time
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/cac0fe9f-f7cb-4c30-896b-fd1e8167fc85)
+
+- Time complexity for each operation is the same for dynamic arrays as they are for static arrays
+
 ### Stacks
+
+Stacks are LIFO (Last In First Out) data structures that support three operations: push, pop, and peek.
+- Push adds an element to the "top" of the stack, or the end of the data structure you implement it with
+- Pop removes an element from the top of the stack
+- Peek accesses/reads the element at the top of the stack but doesn't remove it
+- All these operations take O(1) time, which means stacks can be implemented using dynamic arrays since dynamic arrays support all these operations with the same time complexity
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/51ae01a4-7015-450b-9c84-0f89e4bde47a)
+
+- Stacks require a pointer or some way to keep track of the number of elements in the stack so you can maintain where the "top" of the stack is and know where to push/pop/peek the next element
+- Stack operations only work on the topmost element so you cannot add, remove, or access elements from the middle of the stack
+- A common analogy is imagining a stack of plates, where it is easy to add or remove plates from the top, but trying to add or remove plates from the middle or bottom is harder so you only do such operations on the top
+
+## Linked Lists
+### Singly Linked Lists

@@ -55,3 +55,26 @@ Stacks are LIFO (Last In First Out) data structures that support three operation
 
 ## Linked Lists
 ### Singly Linked Lists
+
+Linked lists are a series of nodes connected by pointers
+
+- Nodes are objects that encapsulate data and pointers
+- Singly linked lists are linked lists where the nodes only have a next pointer that points to the next node in the linked list
+- Since linked lists are connected by pointers, the node objects don't have to be stored contiguously or in order in memory like data in arrays
+- The first node in a linked list is typically referred to as the "head" and the ending node is referred to as the "tail"
+#### Traversing a Linked List
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/6bd84350-437c-4c40-a5c1-eb54e7a29882)
+- You use a pointer to keep track of the current node you're on and move it to the next node in the linked list in a while loop
+- Since the ending node points to null, the loop conditional will check for if the current node is a valid node or null, which would signify that we have traversed the entire linked list
+- This is an O(n) time operation because you have to read n elements
+#### Implementation
+- You only need to create a node object or custom data type to make a linked list because the structure is automatically made from the properties of the node since they have the next pointer built in to them to connect them
+- It is also helpful to keep track of the head and tail of the linked list by setting pointers to the first and last nodes, updating them if a new head or tail node is inserted into the linked list
+#### Insertion and Removal
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/b9716fe1-50b9-49cc-88b4-9979fcbe2cfc)
+- The first line of code uses the "tail" variable/reference to set the next pointer of node 3 to the newly added node
+- The second line makes the tail variable reference the newly added node to signify that it is the new tail of the linked list
+  - This can also be done by using the commented code. Because the tail variable still references the 3rd node, setting tail to tail.next makes the tail variable reference the 4th node because the first line sets the 3rd node's next pointer to point at the 4th node
+- Adding a new tail node is an O(1) time operation because having the tail pointer means we don't have to traverse the entire linked list to access the current last node and change its next pointer to point at the node you want to add in and instead just execute the two lines of code no matter how many elements there are
+- Removing a node from the beginning or end of the linked list takes O(1) time because you can just change the pointers to where the second node is the new head, the head points to the third node (if there is one), or the second to last node points to null (after freeing the last node if the compiler doesn't have a garbage collector)
+- Insertion or removal in the middle takes O(n) time because you have to traverse the entire linked list to find the node that will point to the new node and then insert it or remove the node you wanted to remove

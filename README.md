@@ -78,3 +78,38 @@ Linked lists are a series of nodes connected by pointers
 - Adding a new tail node is an O(1) time operation because having the tail pointer means we don't have to traverse the entire linked list to access the current last node and change its next pointer to point at the node you want to add in and instead just execute the two lines of code no matter how many elements there are
 - Removing a node from the beginning or end of the linked list takes O(1) time because you can just change the pointers to where the second node is the new head, the head points to the third node (if there is one), or the second to last node points to null (after freeing the last node if the compiler doesn't have a garbage collector)
 - Insertion or removal in the middle takes O(n) time because you have to traverse the entire linked list to find the node that will point to the new node and then insert it or remove the node you wanted to remove
+
+### Doubly Linked Lists
+
+ Doubly linked lists are linked lists with each node having two pointers: one that points to the previous node in the linked list and one that points to the next node in the linked list. The head node's previous pointer points to null and the tail node's next pointer points to null.
+
+ #### Insertion and Removal
+ - Insertion is similar to how you would insert a node at the end of a singly linked list except you now have to update the new node's previous pointer to point at the previous tail node
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0abf4c2e-29b1-4a1a-9a37-f9e761158bb3)
+  - The first line of code makes the previous tail's next pointer point to the newly added node. Then the new node's previous pointer is set to point at the previous tail node. Finally, the tail pointer gets set to point at the newly added node.
+- Removing the tail node of a doubly linked list is also similar except the previous pointers make it easier since you can just follow the tail node's previous pointer to get to the new tail of the linked list
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/e0328c83-62db-4d5f-89ff-3a2cd0a3eef1)
+  - The first line assigns a new pointer to point at the second to last node in the linked list by following the previous pointer of the current tail node. This makes it so we can use this node's pointers and reference in subsequent steps when we have to update this node's next pointer and the tail pointer. The second line makes the next pointer of the second to last node point to null to signify that it is the new tail of the linked list. Finally, the last line sets the tail pointer to point to the same node, and the previous tail node would be garbage collected if the compiler has a garbage collector. Otherwise, you would have to free the memory of the tail node first before executing the second line.
+- Since these operations are the same no matter how many elements are in the linked list, these operations take O(1) time.
+    - This means that stacks can be implemented using linked lists as well as arrays. However, it is less common to use linked lists because you lose the extra benefit of accessing any element in the stack at random that array offer with their indexing system. In linked lists, to access any random element, it would take O(n) time because you would have to traverse through the linked list node by node, but with arrays it is a O(1) time operation so that extra functionality is absent from linked list implementations.
+
+#### Comparing Arrays and Linked Lists
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/e2f533f2-1886-4d9b-8807-334a6b351ee0)
+- The advantage of arrays is that you can randomly access any element efficiently in O(1) time whereas in linked lists you would have to traverse the linked list starting from the head node every time until you found the i-th node
+- Both arrays and linked lists can insert and remove elements from the end or beginning in O(1) time. However, linked lists have an advantage over arrays in this regard even though they both operate in O(1) time because trying to insert an element at the end of an array when it's at full capacity is not allowed if it's static and would be an O(n) time operation if it was dynamic since you would have to create a new array to resize and copy over each value of the old array. Arrays also have to shift every element over when removing from the beginning, meaning that this is also a O(n) time operation. Linked lists can always insert/remove from the beginning/end in O(1) time no matter how many elements there are because they do not have the restriction of being contiguous in memory and instead are connected through pointers. 
+- The advantage of linked lists is that you can insert or remove elements from the middle in O(1) time because you can just change the pointers to point to the newly added node if you were inserting or the node that the removed node was pointing at if you were removing. However, in most cases, you would have to traverse the linked list in order to access the node you needed in order to insert or remove a node, which means it would take O(n) time.
+- Overall, arrays have a slight advantage over linked lists since the random access with the indexing system is very useful and makes them more versatile than linked lists. Linked lists also practically don't have an advantage over arrays when it comes to insertion/removal from the middle since most of the time you would have to traverse the linked list in O(n) time to insert/remove a node. Even though the insertion/removal themselves are O(1) time operations, you would have to traverse the linked list to get to the insertion/removal point. Since traversal is a O(n) time operation, it dominates the O(1) time complexity of the insertion/removal, making the insertion/removal operation as a whole a O(n) time operation. 
+
+### Queues
+
+Queues are FIFO (First In, First Out) data structures that support two main operations: enqueue and dequeue
+- Enqueue is similar to push for stacks, where you add an element to the end of the queue
+- Dequeue is similar to pop for stacks except that you would remove an element from the beginning of the queue to preserve the FIFO structure
+- This means that elements are removed in the same order they were added, hence why it is called a FIFO data structure. The first element that was added is going to be the first element to be removed.
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/01595808-4661-4a4d-af40-8322dd54b2d3)
+- Just like stacks, these operations are meant to be done in O(1) time
+    - Because of the FIFO structure of queues, dequeuing is not typically possible with arrays because when you remove an element from the beginning of the array, you would have to shift all elements down, making dequeuing a O(n) time operation.
+- Linked lists are usually used to implement queues because they can insert at the end and remove from the beginning in O(1) time
+- Implementation of a queue involves maintaining a current pointer that signifies the head of the linked list/beginning of the queue and a tail pointer to signify the end of the linked list/end of the queue.
+- Enqueuing is just like adding a new node to the end of a linked list, where you make the current tail point to the new node and set the tail pointer to point to that node
+- Dequeuing is similar to removing from the beginning of a linked list, where you just set the current pointer to point to current.next to effectively make the new head of the linked list the second node and removing the first node

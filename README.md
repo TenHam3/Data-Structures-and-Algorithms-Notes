@@ -5,7 +5,7 @@
 
 - RAM (Random Access Memory) is used to store variables and data structures
 - Data structures are a way of organizing a collection of data
-- RAM in any typical device is measured in gigabytes, which is approximately 10^9 bytes
+- RAM in any typical device is measured in gigabytes, which is approximately 10<sup>9</sup> bytes
   - A byte is 8 bits
     - A bit is a digit that can be represented by either a 0 or 1 and is the building block for the language used and understood by computers, called binary
 
@@ -181,8 +181,36 @@ An example of the 5th Fibonacci number can be visualized using a tree. Each node
 #### Time Complexity
 
 Because the formula requires two function calls, it ends up breaking each problem/node into two subproblems/nodes until the base case has been reached. This doubling nature means that the time complexity depends on the last level and however many nodes are in it.
-- This is similar to how the time complexity for resizing a dynamic array was dominated by the last term in the reconstruction. The number of operations it took to do the latest reconstruction was greater than or equal to the sum of the total operations it took for all previous reconstructions. The maximum number of nodes in the last level is equivalent to 2^(n-1) since the longest path down the tree would count down to 1 from the number you started with to compute the nth Fibonacci term. It is n - 1 because the first level is indexed at 0, so for the maximum number of nodes at the last level of the decision tree for the 5th Fibonacci number, there would be a maximum of 2^4 = 16 nodes.
+- This is similar to how the time complexity for resizing a dynamic array was dominated by the last term in the reconstruction. The number of operations it took to do the latest reconstruction was greater than or equal to the sum of the total operations it took for all previous reconstructions. The maximum number of nodes in the last level is equivalent to 2<sup>(n-1)</sup> since the longest path down the tree would count down to 1 from the number you started with to compute the nth Fibonacci term. It is n - 1 because the first level is indexed at 0, so for the maximum number of nodes at the last level of the decision tree for the 5th Fibonacci number, there would be a maximum of 2<sup>4</sup> = 16 nodes.
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/585a171a-14e5-4aa0-b796-faf765c1769c)
 
-- This gives an upper bound for how many nodes can be in the last level, which also means that it can serve as the time complexity since each node represents a calculation being made and the number of calculations is dominated by the number of nodes in the last layer. Since the total number of calculations that it took to compute the nth Fibonacci number is less than or equal to 2 * 2^(n - 1), the time complexity simplifies to O(2^n).
+- This gives an upper bound for how many nodes can be in the last level, which also means that it can serve as the time complexity since each node represents a calculation being made and the number of calculations is dominated by the number of nodes in the last layer. Since the total number of calculations that it took to compute the nth Fibonacci number is less than or equal to 2 * 2<sup>(n - 1)</sup>, the time complexity simplifies to O(2<sup>n</sup>).
+
+## Sorting 
+### Insertion Sort
+
+Insertion sort is an algorithm that involves breaking the array or any data structure down to smaller subproblems such as a subarray and sorting them, gradually working your way back to the original size each time. The process of breaking down the array into smaller subarrays stops when it gets to the zeroth index, making it a subarray of size 1 because that will always be in sorted order since there are no elements to compare the single element to. This is when the algorithm begins working its way back to the original size, now sorting a subarray of size 2 with the zeroth and first elements and so on. In each iteration the algorithm encounters an element that is greater than the previous element, it stays at the position it was at and moves on to the next iteration/subarray because the previous iterations that sort the smaller subarrays means that every element before was also smaller, or in the order it should be, so there would be no need to go back and compare it to every element before. However, if the algorithm comes across an element smaller than the previous one, it will have to swap positions and compare it to its new previous element. This process will continue until the element is greater than its previous neighbor or it lands in the first position/zeroth index, maintaining the sorted order.
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/8a1b60e0-7001-4ff6-b58f-7c5896c3d79c)
+
+- Although this algorithm involves breaking the array down into subproblems, the iterative solution is simpler and more efficient in both time and space complexity
+- The algorithm starts with a for loop that loops through the entire array starting at index 1 since the first element at the zeroth index is already sorted so there's no need to start there
+- We then create a pointer j to keep track of the element we're comparing the current element to. The j pointer starts one index behind the current last index in the subarray of the current iteration.
+- The while loop conditions check for if the jth index is greater than or equal to 0 to safeguard from the index going out of bounds and if the element in front of the jth index is less than the element at the jth index. This essentially is checking for if the new element of the subarray is less than the previous element.
+  - If these conditions are satisfied, the while loop is entered and the swapping process begins. You first save the newly added element in a temporary variable, replace it with the previous element, and put it in the previous position. Then you decrement j to check if it is smaller than its new previous neighbor.
+- At the end, the function returns the sorted array
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/092cbe63-385a-438b-91a1-d31378fc9c3e)
+
+#### Stability 
+
+Stable sorting is when a sorting algorithm preserves the relative order of elements in a data structure, so if there are duplicate elements, they are arranged in the order of which came first/from lowest index to highest index. Unstable sorting algorithms may or may not preserve the relative order. There is no guarantee that an unstable sorting algorithm will maintain the relative order of elements.
+
+- Insertion sort is a stable sorting algorithm because the condition for performing the swap of elements checks for if the jth element is greater than the j + 1th element, not greater than or equal to. This means that any duplicate elements being compared will not enter the while loop and trigger a swap, maintaining the relative order.
+
+#### Time Complexity 
+
+In the best case scenario, that is, when using insertion sort on an already sorted array, it runs in O(n) time because it has to traverse the entire array to check if they are smaller than the previous element. Even though the implementation includes a nested loop, it runs in O(n) time in this case since the array is already in sorted order, meaning it doesn't meet the while loop condition that checks whether the j + 1th element is less than the jth element and thus never runs the while loop. In the worst case scenario where the elements are stored in reverse order, insertion sort runs in O(n<sup>2</sup>) time because you would have to iterate through the entire array from the for loop and perform n - 1 swaps every iteration where n is the size of the current subarray. This amounts to O(n<sup>2</sup>) time complexity. Even though it doesn't perform n<sup>2</sup> operations, the time complexity is denoted as O(n<sup>2</sup>) because the amount of operations is bounded by n<sup>2</sup> since that is the maximum number of operations possible for a nested loop.

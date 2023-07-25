@@ -37,7 +37,7 @@ Dynamic Arrays are dynamically sized arrays that resize themselves if you add an
 - It does this by reconstructing a new array that is typically double the size of the original array and copying all the original elements from that array into the new one and freeing the memory that the old array was taking up. It then adds/removes the element the user wanted to before resizing
 - The doubling in size makes pushing/popping an element take O(n) time on average because you wouldn't have to keep reconstructing the array after every push/pop
   - The amount of operations it takes to reconstruct an array by doubling is always dominated by the most recent reconstruction, meaning that the amount of operations it takes to reconstruct an array is always greater than or equal to the sum of the amount of operations it took from previous reconstructions. This also means the total sum of all operations it took to reconstruct the array into the latest size is less than or equal to twice the amount of operations the latest reconstruction took
-    - Pushing an arbitrary n number of elements takes O(2n) time, which reduces to O(n) time
+    - Pushing an arbitrary n number of elements takes O(2n) time, which reduces to O(n) time because you can disregard constants when talking about O time complexity when the constants are adding or multiplying with variables
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0b0f20ca-e49a-4c6a-bb41-450a48a43760)
 
@@ -131,3 +131,58 @@ Queues are FIFO (First In, First Out) data structures that support two main oper
 - Implementation of a queue involves maintaining a current pointer that signifies the head of the linked list/beginning of the queue and a tail pointer to signify the end of the linked list/end of the queue.
 - Enqueuing is just like adding a new node to the end of a linked list, where you make the current tail point to the new node and set the tail pointer to point to that node
 - Dequeuing is similar to removing from the beginning of a linked list, where you just set the current pointer to point to current.next to effectively make the new head of the linked list the second node and removing the first node
+
+## Recursion
+### Factorial
+
+Recursion is when a function calls itself with a smaller output
+
+The factorial operation is just the multiplication of any integer with all subsequent integers counting down to 1
+- This can be written as the formula n! = n * (n - 1)!, which lends itself to a recursive algorithm since it can be broken down into a smaller subproblem with the same algorithm
+
+Recursive functions have two parts:
+- The base case
+- The function calling itself with a different input
+
+There are two types of recursion: one-branch and two-branch. The recursion used to solve factorials involves one-branch recursion because each time you call the function, there is only one decision to be made in the decision tree (one calculation/function call for any level of the recursion).
+
+#### Implementation and Explanation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/52ed6de4-8015-4bbb-84b7-4c87bc6a7d7e)
+
+- The second return statement creates the subproblems of calculating the factorial of the smaller integers
+  - This will keep executing until it gets down to 1, which is the base case handled in the first return statement
+- After the base case has been reached, it will begin going back through the call stack to do every other recursive calculation since each call will have the previous factorial calculation solved
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/7de9f319-754b-44a4-9249-f9715d7a9b7d)
+
+#### Time and Space Complexity
+- Since you have to make a calculation for each level in the recursion, this algorithm takes O(n) time to execute. However, the recursive solution is actually worse than the iterative solution because it takes extra memory. This is because there will be n function calls, which take up space in the RAM for the parameters and function call itself, meaning that the space complexity is O(n) as well.
+
+### Fibonnacci Sequence
+
+The Fibonacci Sequence is a sequence of numbers created by taking the sum of the previous two Fibonacci numbers, with the zeroth Fibonacci number being 0 and the first Fibonacci number being 1. These will serve as the base cases for the recursion. The formula for computing the nth Fibonacci number is
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/73fce719-4620-4ea8-bffc-c37131ee88aa)
+
+Calculating any Fibonacci number can be solved using two-branch recursion since the formula for calculating the nth Fibonacci number involves the same algorithm being used to break down the problem into basic conditions that serve as the base cases.
+
+An example of the 5th Fibonacci number can be visualized using a tree. Each node in the tree has at most 2 branches, which is why this is called two-branch recursion. Each node that has two branches is a result of the fact that the formula to compute the nth Fibonacci number uses the same algorithm twice in its calculation.
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/3acdc158-5be5-4639-9c3f-5400b2d34e58)
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/6aa48dec-5969-49f2-b460-138fbdfb8676)
+
+- The first return statement takes care of the base cases where you would get to the zeroth or first Fibonacci number
+- The second return statement applies the formula to compute the nth Fibonacci number using the same function, resulting in a recursive solution
+
+#### Time Complexity
+
+Because the formula requires two function calls, it ends up breaking each problem/node into two subproblems/nodes until the base case has been reached. This doubling nature means that the time complexity depends on the last level and however many nodes are in it.
+- This is similar to how the time complexity for resizing a dynamic array was dominated by the last term in the reconstruction. The number of operations it took to do the latest reconstruction was greater than or equal to the sum of the total operations it took for all previous reconstructions. The maximum number of nodes in the last level is equivalent to 2^(n-1) since the longest path down the tree would count down to 1 from the number you started with to compute the nth Fibonacci term. It is n - 1 because the first level is indexed at 0, so for the maximum number of nodes at the last level of the decision tree for the 5th Fibonacci number, there would be a maximum of 2^4 = 16 nodes.
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/585a171a-14e5-4aa0-b796-faf765c1769c)
+
+- This gives an upper bound for how many nodes can be in the last level, which also means that it can serve as the time complexity since each node represents a calculation being made and the number of calculations is dominated by the number of nodes in the last layer. Since the total number of calculations that it took to compute the nth Fibonacci number is less than or equal to 2 * 2^(n - 1), the time complexity simplifies to O(2^n).

@@ -203,6 +203,8 @@ Insertion sort is an algorithm that involves breaking the array or any data stru
   - If these conditions are satisfied, the while loop is entered and the swapping process begins. You first save the newly added element in a temporary variable, replace it with the previous element, and put it in the previous position. Then you decrement j to check if it is smaller than its new previous neighbor.
 - At the end, the function returns the sorted array
 
+#### Visualization
+
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/092cbe63-385a-438b-91a1-d31378fc9c3e)
 
 #### Stability 
@@ -217,4 +219,59 @@ In the best case scenario, that is, when using insertion sort on an already sort
 
 ### Merge Sort
 
-Merge sort is another sorting algorithm that involves recursively breaking down the array into halves, sort the halves, and merge the halves together. The algorithm first breaks down the array until the halves reach a size of 1 because arrays of size 1 are automatically sorted. It then merges the two halves together in sorted order by going through each array starting from the zeroth index of both, comparing the two elements, placing the lesser of the two elements into the array, going to the next element of the array and iterating this process until there are no more elements left from both halves to merge. It keeps merging these sorted halves until we are back to the original array's size and both sorted halves have been merged, leaving you with the original array in sorted order. The technique of repeatedly splitting the array into approximately equal halves is called divide and conquer because we are dividing the original problem into smaller and more manageable subproblems and solving them first before solving the original larger problem. 
+Merge sort is another sorting algorithm that involves recursively breaking down the array into halves, sort the halves, and merge the halves together. The algorithm first breaks down the array until the halves reach a size of 1 because arrays of size 1 are automatically sorted. It then merges the two halves together in sorted order by going through each array starting from the zeroth index of both, comparing the two elements, placing the lesser of the two elements into the array, going to the next element of the array and iterating this process until there are no more elements left from both halves to merge. When one subarray runs out of elements to add while the other still has more, the algorithm will just merge the remaining elements from that array into the merged array. It keeps merging these sorted halves until we are back to the original array's size and both sorted halves have been merged, leaving you with the original array in sorted order. The technique of repeatedly splitting the array into approximately equal halves is called divide and conquer because we are dividing the original problem into smaller and more manageable subproblems and solving them first before solving the original larger problem. 
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/a0153f86-0921-4088-b6e3-af2585910cc5)
+
+- The function passes in the array that will be sorted along with the starting and ending indices because that will make it easier to recursively call the function on the smaller subarrays without having to actually create the subarrays in memory and instead just operate on the smaller index ranges
+- The first line checks for the base case if the current subarray is of size 1. It does this by seeing if the difference between the ending and starting index plus one is less than or equal to 1 because if the subarray was of size 1, both the starting and ending index would be the same so their difference would be 0 and adding 1 to it means that the size is 1.
+- The next line calculates the middle index of the current array to keep track of where to divide the array into its smaller subarrays
+- The next two lines call the mergeSort function on the two halves of the array to achieve the recursive step of dividing the problem into smaller subproblems
+- The next line merges the two halves together before returning the new sorted array back up the call stack to merge with other sorted halves or to return the original array in sorted order. The merge function is where the sorting occurs since that's how the algorithm works. It goes through both sorted halves one by one, comparing one element of one half to one element of the other and placing them in the array depending on which is smaller. This is the merge process.
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/8a4a1832-527c-411b-a433-258ff04a346a)
+
+- The first two lines copy the left and right halves of the array into temporary subarrays so that the algorithm can iterate through each half and compare their elements to merge them in sorted order. The second argument in the function that makes the copy array for both halves is the ending index of the subarrays and it is exclusive, meaning that the element at that index is not included which is why the left half ends at arr.begin() + m + 1 and the right half ends at arr.begin() + e + 1 instead of just arr.begin() + m and arr.begin() + e.
+- The next 3 lines declare variables to serve as pointers. The first two are pointers for the left half and right half of the array and the last pointer is to keep track of the position to place the next element.
+- The while loop is where the merging occurs. The conditions check for if either of the pointers is out of bounds/if either of the arrays has no elements left to add. Then the loop checks for if the current element in the left array is smaller than the current element in the right array. If so, it will add that element into the kth index of the array and simultaneously increment i to move the pointer to the next index of the left half (this is done by utilizing the increment operator i++ since it allows the program to use the current value of i before incrementing it). If the element in the right half is smaller, it will add that element to the kth index and increment j. Afterwards, the while loop increments k to move the pointer to the next position in the array and the while loop continues.
+- After the while loop is done, there will only be one half that will have merged all of its elements so the remaining while loops check to see which half still has elements to add and adds them in. Since the halves should be sorted, they just add the elements in the order they are in the subarray.
+    - The piece of code used for i pointer and j pointer is actually referred to as the two pointer technique and is extremely useful when we have two arrays and need to go through them simultaneously to perform some logic. This could actually be used to combine two arrays and do so in O(n) time.
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0accd1be-0ac1-4145-9486-353f8b15a2ac)
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/d189a214-3c21-46a8-a0d6-50c820cc8e18)
+
+#### Time and Space Complexity
+
+The number of times you can split the array into halves is the same as the amount of levels there are in the decision tree. In order to figure this out, we construct an equation to figure out how many times we can split an array of n elements in half until we get to 1, the base case. The equation is as follows:
+- $n/{2^x} = 1$
+
+Rearranging gives us
+
+- $n = 2^x$
+
+To solve for x, the number of times you can divide the array by 2 to get to subarrays of size 1, you can take the log base 2 of both sides
+
+- $\log{_2}{n} = \log{_2}{2^x}$
+
+You can simplify the right side using logarithmic rules by moving the x out in front
+
+- $\log{_2}{n} = x\log{_2}{2}$
+
+Taking the log of a number that is the same as the base is 1 so
+
+- $\log{_2}{n} = x$ or $x = \log{n}$ since in computer science log is usually assumed to be base 2
+
+So the number of times you can split the array in half is $\log{n}$
+
+However, this is not the full time complexity as it is only the number of levels we have for the decision tree. We need to calculate the total number of operations it takes to execute the algorithm by determining how many operations are being done per level. In the merge function, we are taking two sorted halves of the array and placing their elements into the array. For each level, you are merging n elements into the arrays and even in the bottom level where the base case is reached, you still have to visit the elements and determine their size to verify that it is the base case, meaning that it also takes n operations. This means that we are doing n operations for every level of the decision tree and we have $\log{n}$ levels to the tree so the total time complexity for merge sort is $n\log{n}$.
+
+The space complexity is O(n) because at any given level there will be n total elements allocated during the merging processes.
+
+#### Stability
+
+Merge sort is a stable sorting algorithm because during the merging process, you can make the comparison step left-biased so that the elements that appeared earlier in the array come before later duplicates. This is shown in the merge function code where it checks if the ith element in the left half is less than or equal to the jth element of the right half. So if there was a duplicate element, the one on the left side gets put in first since it satisfies the if statement condition to add the element from the left side, maintaining the relative order.

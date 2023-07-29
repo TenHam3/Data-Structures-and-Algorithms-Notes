@@ -219,7 +219,7 @@ In the best case scenario, that is, when using insertion sort on an already sort
 
 ### Merge Sort
 
-Merge sort is another sorting algorithm that involves recursively breaking down the array into halves, sort the halves, and merge the halves together. The algorithm first breaks down the array until the halves reach a size of 1 because arrays of size 1 are automatically sorted. It then merges the two halves together in sorted order by going through each array starting from the zeroth index of both, comparing the two elements, placing the lesser of the two elements into the array, going to the next element of the array and iterating this process until there are no more elements left from both halves to merge. When one subarray runs out of elements to add while the other still has more, the algorithm will just merge the remaining elements from that array into the merged array. It keeps merging these sorted halves until we are back to the original array's size and both sorted halves have been merged, leaving you with the original array in sorted order. The technique of repeatedly splitting the array into approximately equal halves is called divide and conquer because we are dividing the original problem into smaller and more manageable subproblems and solving them first before solving the original larger problem. 
+Merge sort is a sorting algorithm that involves recursively breaking down the array into halves, sort the halves, and merge the halves together. The algorithm first breaks down the array until the halves reach a size of 1 because arrays of size 1 are automatically sorted. It then merges the two halves together in sorted order by going through each array starting from the zeroth index of both, comparing the two elements, placing the lesser of the two elements into the array, going to the next element of the array and iterating this process until there are no more elements left from both halves to merge. When one subarray runs out of elements to add while the other still has more, the algorithm will just merge the remaining elements from that array into the merged array. It keeps merging these sorted halves until we are back to the original array's size and both sorted halves have been merged, leaving you with the original array in sorted order. The technique of repeatedly splitting the array into approximately equal halves is called divide and conquer because we are dividing the original problem into smaller and more manageable subproblems and solving them first before solving the original larger problem. 
 
 #### Implementation
 
@@ -268,10 +268,41 @@ Taking the log of a number that is the same as the base is 1 so
 
 So the number of times you can split the array in half is $\log{n}$
 
-However, this is not the full time complexity as it is only the number of levels we have for the decision tree. We need to calculate the total number of operations it takes to execute the algorithm by determining how many operations are being done per level. In the merge function, we are taking two sorted halves of the array and placing their elements into the array. For each level, you are merging n elements into the arrays and even in the bottom level where the base case is reached, you still have to visit the elements and determine their size to verify that it is the base case, meaning that it also takes n operations. This means that we are doing n operations for every level of the decision tree and we have $\log{n}$ levels to the tree so the total time complexity for merge sort is $n\log{n}$.
+However, this is not the full time complexity as it is only the number of levels we have for the decision tree. We need to calculate the total number of operations it takes to execute the algorithm by determining how many operations are being done per level. In the merge function, we are taking two sorted halves of the array and placing their elements into the array. For each level, you are merging n elements into the arrays and even in the bottom level where the base case is reached, you still have to visit the elements and determine their size to verify that it is the base case, meaning that it also takes n operations. This means that we are doing n operations for every level of the decision tree and we have $\log{n}$ levels to the tree so the total time complexity for merge sort is O($n\log{n}$).
 
 The space complexity is O(n) because at any given level there will be n total elements allocated during the merging processes.
 
 #### Stability
 
 Merge sort is a stable sorting algorithm because during the merging process, you can make the comparison step left-biased so that the elements that appeared earlier in the array come before later duplicates. This is shown in the merge function code where it checks if the ith element in the left half is less than or equal to the jth element of the right half. So if there was a duplicate element, the one on the left side gets put in first since it satisfies the if statement condition to add the element from the left side, maintaining the relative order.
+
+### Quick Sort
+
+Quick sort is another recursive sorting algorithm that picks an index called a pivot and partitions the array such that all values to the left of the pivot are less than it and all values to the right of it are greater than it. For this implementation, the pivot will be the last index, so the algorithm iterates through all values in the array besides the last one, sorting them based on whether they are less than or greater than the pivot. The pivot can be at a different index depending on the initial size and order of the array. The partition is done by swapping elements that are less than the pivot to the beginning of the array, incrementing the index of the pointer for this position for every swap that occurs. After every element has been iterated through and we get to the pivot, we swap the pivot with the element at the index where the swap pointer is at, which partitions the array to where all elements left of the pivot are less than it and all elements to the right of it are greater. Once the array is partitioned, the recursive step begins and we run quick sort on the newly partitioned array and keep doing so until we get down to subarrays of size 1 just like merge sort.
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/30ee03bf-2254-4820-906b-013bfb341ede)
+
+- The base case is the same as merge sort so it checks whether the current array is of size 1
+- The next two lines initialize the pivot at the end of the array and the "left" pointer that functions as the pointer that indicates where to swap the next element that is less than the pivot
+- The for loop iterates through the entire array (except for the last index because that's where the pivot is) and compares each element to the pivot. If it is less than the pivot, it performs a swap with the element at the left pointer and increments the left pointer.
+- After every element has been iterated through, the next two lines swap the pivot with the element at the left pointer to create the partition. Now, all elements left of the pivot are less than or equal to the pivot and all elements right of the pivot are greater than or equal to the pivot.
+- The next two lines implement the recursive step of quick sort, performing the function on the left and right halves of the array. Note that the left side's ending index is at left - 1 and the right side's starting index is at left + 1 because the partition makes it so that the pivot is already in the spot it should be since all elements before are less than or equal to it and all elements after are greater than or equal to it, so no matter what happens in the sublevels of the recursion, it will always be in the spot it needs to be for it to be sorted.
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/fefe0249-e38a-4d90-815f-d973038b8e13)
+
+#### Time Complexity
+
+The best case scenario for quick sort is when you can keep partitioning the array down the middle such that the array gets divided into two equal subproblems. Since we are doing n operations for each level of the decision tree and the nature of dividing the problem into two equal halves every time makes the height of the tree $\log{n}$, the best case time complexity would be O($n\log{n}$). This only occurs when the pivot is the median of the array. In the worst case, the pivot is the smallest or largest value of the array, making the partitions into two unequal subarrays: one where it is just the pivot and another that includes the rest of the array. If this happens at every level, we will be doing approximately n operations on n levels of the decision tree instead of just $\log{n}$ levels so the worst case time complexity would be O($n^2$). In the implementation above, this would happen when the input array is already sorted since the pivot would always be the greatest element. The worst case scenario does not happen often so on average, the time complexity of quick sort is O($n\log{n}$).
+
+#### Stability
+
+Quick sort is not a stable sorting algorithm because the algorithm swaps non-adjacent elements, which doesn't guarantee it preserves the relative order of elements. For example, an array such as [7, 3, 7, 4, 5] will work out like this:
+
+- First swap: [3, 7, 7, 4, 5]
+    - The 7 that was initially in the 0th index swapped with the 3 and is now in the 1st index
+- Second swap: [3, 4, 7, 7, 5]
+    - The 7 that was initially in the 0th index swapped with the 4 that was in the 3rd index and is now after the 7 that was initially in the 2nd index

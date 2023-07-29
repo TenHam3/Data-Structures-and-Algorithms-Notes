@@ -306,3 +306,31 @@ Quick sort is not a stable sorting algorithm because the algorithm swaps non-adj
     - The 7 that was initially in the 0th index swapped with the 3 and is now in the 1st index
 - Second swap: [3, 4, 7, 7, 5]
     - The 7 that was initially in the 0th index swapped with the 4 that was in the 3rd index and is now after the 7 that was initially in the 2nd index
+
+### Bucket Sort
+
+Bucket sort is a sorting algorithm that has a restriction of only being able to be used on an array of values within a finite range. If the range is too big, you cannot use bucket sort. Bucket sort works by creating buckets that map to the values in the array. Buckets are just indices of an array that will map to the values in the array that holds the values that need to be sorted. Each bucket will have a value associated with them that tells you how many of those elements there are in the array. After all the buckets are made and filled up, the array will then be overwritten with new values given by the buckets, iterating through each bucket and writing however many of that element are meant to be added to the original array. 
+
+#### Implementation 
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0140bd6b-238d-4f52-9a2e-89da4e673f6b)
+
+- The first line creates the array that holds the buckets and initializes them all to 0
+- The for loop counts the frequency of each of the elements in the array by iterating through the array and incrementing the corresponding bucket for each value
+- The next few lines are where the original array gets overwritten with the new values in sorted order. First, it initializes a variable i to 0 to indicate the current index of the array to add the next element. The outer for loop iterates through all the buckets and the inner for loop iterates the number of times equal to the frequency of the number associated with that bucket. Inside the inner loop, it overwrites the element at index i with the number associated with that bucket and increments i.
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/28359c88-0bb6-4f41-be2e-6cc5fd44266b)
+
+#### Time and Space Complexity
+
+The first part of the algorithm fills the buckets by iterating through the entire array to count the frequency of each value in the array. The second part goes through each bucket and puts in the corresponding number of values into the array. When thinking about what the algorithm is doing, it just goes through all the buckets and puts the same number of elements in as there were originally so even though there is a nested loop, the algorithm only really performs n operations, one for each time a number from a bucket gets written to the array. The total number of iterations of the inner loop amounts to n. Adding the two parts together, the time complexity would be O(2n), which simplifies down to O(n). The space complexity comes out to be however big the range of values is for the array because you have to allocate a bucket for every value within the range. Since bucket sort is meant to be used on arrays with a finite range of values, the range is going to be constant, making the space complexity O(c) where c is the constant representing the range, which simplifies to O(1).
+
+#### Stability
+
+Bucket sort is not a stable sorting algorithm because it overwrites values instead of swapping them, effectively creating a new array of values with a different relative order. Bucket sort only cares about the frequency of each value and places them in, overwriting the original value stored so any relative order that was established is removed and makes it unstable.
+
+### Comparison of Different Sorting Algorithms
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/08937f76-7470-4b88-a5ae-c9faac9c5826)

@@ -334,3 +334,63 @@ Bucket sort is not a stable sorting algorithm because it overwrites values inste
 ### Comparison of Different Sorting Algorithms
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/08937f76-7470-4b88-a5ae-c9faac9c5826)
+
+## Binary Search
+
+### Search Array
+
+Binary search is a search algorithm that cut down your search space in half each iteration until the desired element is found or every element in the array is searched and is still not found, meaning that the desired element is not in the array. The algorithm starts by picking the middle element in the array and comparing it to the target value. Binary search will either return the element's index if the middle element is the target or run on the left or right half of the array depending on whether the middle value is greater than or less than the target, respectively. Binary search can only be successfully executed on an array that is already in sorted order because otherwise there would be no guarantee that the target value will be in the half it's supposed to be based on the comparison step. 
+- Ex: If binary search were to run on the array [1, 4, 3, 2, 5] and the target value was 4, it would compare 3 to 4. Since 3 is less than 4, it would disregard the left half of the array and run binary search on the right half, even though 4 was in the left half of the array.
+
+#### Implementation 
+Binary search can be implemented using recursion or iteration but iteration is simpler
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/763c91bb-7cf6-4054-b3ad-a34196d6d46d)
+
+- The first line creates two pointers to keep track of the boundaries of the current subarray we are running binary search on
+- The while loop is where we iteratively run binary search on increasingly smaller subarrays until the target is found or until no more elements are left to search. The condition checks if the left pointer is less than or equal to the right pointer because if this condition is satisfied, it means there is still at least one element to search in the search space. If the left pointer was greater than the right pointer, that would mean they crossed and there would be no more elements to search.
+    - The first thing the while loop does is calculate the middle of the current subarray by taking the average of the left and right indices
+        - This implementation of taking the average of the left and right indices has a bug if the sum of the left and right indices exceeds the maximum integer value ($2^{31} - 1$) so a better implementation would be to use something like this:
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/f931a3be-f160-4cc2-bb1b-8841b8a022b3)
+
+- It then goes through a series of if-else statements to determine if the element is found or if binary search should be run on the left or right half
+  - If the target is greater than the middle element, it will shift the left pointer to middle + 1 to create the new boundary for the subarray, effectively cutting the search space in half by disregarding the left half of the array
+  - If the target is less than the middle element, it will shift the right pointer to middle - 1 for the same reason
+  - If neither of these conditions is met, it will return the middle index because that must mean that the element has been found
+- If the while loop exits, that means that the pointers have crossed and all elements have been effectively searched without returning an index, meaning that the element was not in the array so we return -1, an invalid index
+
+#### Visualization 
+
+- Target exists in the array
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/9a7cc808-23a5-48ef-bf73-ffb0d059b351)
+
+- Target does not exist in the array
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c9c8a738-c158-41b9-b547-f86dc1206406)
+
+#### Time and Space Complexity
+
+Similar to merge sort, we are dividing the problem in half for each iteration that we execute binary search on the array. In the worst case scenario where the search space gets reduced all the way down to a size 1 subarray, it would take O($log{n}$) time since that's how many times you can divide the array in half until you get to size 1. Since our implementation didn't allocate extra memory to create the subarrays and instead only created a few pointers, the space complexity would be O(1).
+
+### Search Range
+
+Sometimes you won't run binary search on an array but on a range of numbers. You also might not be given a target value and you just have to search the range of numbers until the algorithm either finds a specific number that satisfies some condition(s) or no number within the range was found that satisfies the condition(s). This means that when running binary search on a range of numbers, each iteration only determines whether the middle value satisfied the condition(s) or not and whether to search lower or higher. There is no target value to compare the middle element of each iteration to so this version of binary search must have some way to determine these things, usually a helper function. 
+- Ex: A friend picks a number at random from 1-100 and wants you to figure it out. He only tells you whether your guess was correct, or if it was too high/low. He doesn't give you a target value since that would defeat the purpose of the game so you have to guess a number based on his feedback of your guesses.
+
+#### Implementation
+
+Helper function to determine if the number is too high, too low, or correct
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/7c63a045-bc67-45ef-84a4-6db543587c4c)
+
+Binary search algorithm that uses the helper function to determine where to search next iteration
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/aa76a285-de10-40a2-990b-1ea736fd31f6)
+
+- In general, the helper function may have other conditions  that may be more sophisticated that need to be satisfied and not just picking a certain number or value
+
+#### Time Complexity
+
+Just like the previous section of binary search, we are cutting the problem down in half each iteration so the time complexity of executing binary search on a range would be O($log{n}$) where n is the range instead of array size

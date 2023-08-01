@@ -394,3 +394,7 @@ Binary search algorithm that uses the helper function to determine where to sear
 #### Time Complexity
 
 Just like the previous section of binary search, we are cutting the problem down in half each iteration so the time complexity of executing binary search on a range would be O($log{n}$) where n is the range instead of array size
+
+## Trees
+
+### Binary Search

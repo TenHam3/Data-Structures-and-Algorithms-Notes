@@ -474,6 +474,18 @@ The top function is a helper function that finds the minimum value in a given tr
 
 - Removal
     - The first line checks if the current node is null and returns a newly created node with the value we want to remove if it is null
-    - The following if-else statements are similar to the insertion algorithm where you compare the target node's value with the current node's value to see which path to traverse. If the target value is greater than the current value, it will recursively call remove on the right child of the current node and return the result on the right child. The same goes for the left side if the target value is less than the current value. Returning the result serves the same purpose as in the insertion, which reconstructs the tree with the target node removed. If neither of these conditions are met, that means we are at the target node and we can begin the removal process.
+    - The following if-else statements are similar to the insertion algorithm where you compare the target node's value with the current node's value to see which path to traverse. If the target value is greater than the current value, it will recursively call remove on the right child of the current node and return the result on the right child. The same goes for the left side if the target value is less than the current value. Returning the result serves the same purpose as in the insertion, which reassigns the pointers leading up to the root to make the new tree with the target removed and the replacement moved to the target's original position. If neither of these conditions are met, that means we are at the target node and we can begin the removal process.
       - The first two if-else statements check if the left and right children exist. If the left child does not exist, it will return the right child. Then it checks if the right child exists and if it doesn't, it will return the left child. These two if-else statements handle case 1 where the target node has 0 or 1 child because if the left doesn't exist, the target will have at most 1 child if the right exists and the same goes for the second condition.
-      - The last else statement handles case 2 where the target node has 2 children. First, it finds the minimum value node of the right subtree and saves it as a variable to use later. It then replaces the current node's value with the min value node and then runs the remove function on the right child of the new replacement node to remove the old minimum value node. 
+      - The last else statement handles case 2 where the target node has 2 children. First, it finds the minimum value node of the right subtree and saves it as a variable to use later. It then replaces the current node's value with the min value node and then runs the remove function on the right child of the new replacement node to remove the old minimum value node.
+
+#### Visualization of Case 1
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/764ca444-a1bc-4cbc-b78c-7be6acebead6)
+
+#### Visualization of Case 2
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/429d3560-6333-41c9-8cd6-bbc83fe3491e)
+
+#### Time Complexity 
+
+The time complexity for both insertion and removal depends on the height, just like searching. This makes sense because the main bulk of the algorithm is finding the insertion/removal point by traversing through the tree and since the time complexity of searching is O(h), this is also the time complexity of insertion and removal. If the tree is balanced, the height will be $log{n}$ for a similar reason to merge sort. In merge sort, the height of the decision tree was $log{n}$ because it was based on how many times the array could be split in half until we get to 1. In a similar vein, the height of a binary search tree is based on how many times you can divide the bottom level until you get to one node, which would be the root node. However, as stated earlier with search, the worst case scenario is when the tree is unbalanced and is either left or right-skewed, making these operations operate in O(n) time.

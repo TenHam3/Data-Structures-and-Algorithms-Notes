@@ -397,4 +397,44 @@ Just like the previous section of binary search, we are cutting the problem down
 
 ## Trees
 
-### Binary Search
+### Binary Tree
+
+Binary Trees are data structures that also involve nodes and pointers to connect different data values, except instead of being represented as directed lines like linked lists, binary trees are visually represented like an upside-down tree or family tree, where there is a sole node at the top to start the tree and branches down and out to other nodes. There are no previous and next pointers, but rather left and right pointers to create this branching-out structure instead of a straight line like a linked list. Binary trees are not allowed to have cycles, meaning that there is no path to be taken that will result in an infinite loop of visiting the same nodes (assuming the pointers are undirected, meaning that you could travel in either direction of the pointer), unlike linked lists where the tail could point back to the head.
+
+- The sole node at the top where all subsequent nodes originate is called the root node. All nodes in the tree can be reached starting from the root node.
+- Any node that points to other nodes is called a parent node and any nodes that are connected from a node higher in the tree are called child or children nodes. The root node does not have any parents.
+- Nodes that share the same parent are called sibling nodes
+- All nodes have to be connected through pointers. No node can be off the tree by not being pointed at by any of the other nodes in the tree.
+- Binary trees restrict their nodes to where any node can have at most two child nodes
+- Any node that is at the lowest level of its path of the tree will have no child nodes and are called leaf nodes
+    - All binary trees are guaranteed to have leaf nodes because of the "no cycle" rule of binary trees that prevent nodes from pointing to their parent or sibling nodes. This ensures that the bottom nodes will not have any nodes to point to and thus become leaf nodes.
+- Any node that is at a lower level of the tree relative to another node is said to be the descendant of that node if there is a path that connects them
+- Any node that is at a higher level of the tree relative to another node is said to be the ancestor of that node if there is a path that connects them
+- Another property of a node in a binary tree is called the height. The height is determined by how many nodes there are from any particular node to its lowest descendant. A leaf node with no children have a height of 1 because there is only 1 node in that path. A node with only 1 descendant has a height of 2 since the path from that node to its lowest descendant has 2 nodes.
+    - Sometimes the height is calculated based on how many pointers there are to get to the lowest descendant of that node, making the lowest height start at 0 instead of 1. In this system, leaf nodes would have a height of 0 and a node with only 1 descendant has a height of 1. This depends on preference and is not that important.
+- The opposite of height in a binary tree is depth. The depth is calculated by determining how many nodes are in the path that connects any particular node to the root node. The root node would have a depth of 1, the children of the root node would have a depth of 2, and so on.
+    - Same as height, the depth is sometimes calculated based on the amount of pointers it takes to get to the root and starts at 0.
+
+### Binary Search Tree
+
+Binary Search Trees are a special type of binary trees that are sorted in a certain manner. For every node in the binary search tree, all its descendants on the left side are less than it and all descendants on the right are greater than it. This grouping of descendants is called a subtree. In general, a subtree is any number of nodes that form the same tree structure with the "root node" being a child node (if you pretended that it didn't have a parent). Binary search trees do not allow duplicates so this will not be an edge case that needs to be handled.
+
+#### Benefit of Binary Search Trees
+
+The benefit of a binary search tree is the same as having a sorted array. Searching for an element in a binary search tree is more efficient and will take O($log{n}$) time on average, just like how arrays can run binary search in O($log{n}$) time.
+
+Because of the way binary search trees are structured, the algorithm for searching for an element in a binary search tree is similar to how binary search on an array functions, where it splits the problem in half every time. For binary search trees, instead of moving to different indices and tightening the boundaries, you can just follow whichever path is necessary to find the element based on the comparison of the target value and the current node's value. The property of binary search trees that order them makes this easy because you can take the left path if the target value is smaller than the current node's value, since all node values left of the current node are smaller, or the right path if the target value is greater than the current node's value since all node values right of the current node are larger.
+
+#### Search Implementation
+
+Searching a binary search tree can be done recursively or iteratively but the recursive solution is easier to learn and code, so that will be how we implement the search algorithm. Even though the nodes in binary search trees can have two children, the search algorithm is one-branch recursion because you only follow one path of the binary search tree and never go back up to the paths you skipped over.
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/1dd622c9-5bdc-4c28-9d0d-bc9aa480469f)
+
+- The first line is the base case of the recursion, which checks to see if the current node is null. If the current node is null, it means that we ran out of nodes to search and return false to signify that the element was not found in the binary search tree.
+    - The !root checks if the current node is null because any value that isn't null is treated as the boolean value True and null is treated as False. This means the statement !root triggers False and does not execute the code inside the if-statement when the current node contains a value and triggers True when the current node is null.
+- The following if-else statements are the comparison steps that tell us which direction to search in next. If the target is greater than the current node, it will recursively search the right side and if the target is less than the current node, it will recursively search the left side. If neither of these conditions are true, that means we have found the value and the last else-statement executes, returning true.
+
+#### Time Complexity
+
+Since this functions similarly to binary search on an array, the time complexity on average is O($log{n}$). However, this only applies to binary search trees that are balanced, meaning that for the entire tree and every subtree, the height will be roughly the same and may differ by only 1. If you had a binary search tree where your root node was the smallest or largest value in the tree and each subsequent node was incrementing or decrementing, it would essentially become a linked list because there would only be one straight path to traverse. In the worst case, this is how our tree would be structured and the target would be the leaf node at the bottom level, meaning we would have to traverse the entire tree, visiting each node until we found the leaf node. This would take O(n) time. Both of these time complexities can be expressed as O(h) where h is the height of the tree. This applies to a balanced binary search tree because you would be dividing the problem by 2 for each iteration until you get to the target, making the height of the tree $log{n}$. This also applies to the one-path binary search tree because the height would just be however many elements there are in the tree, which is n.

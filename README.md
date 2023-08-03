@@ -438,3 +438,42 @@ Searching a binary search tree can be done recursively or iteratively but the re
 #### Time Complexity
 
 Since this functions similarly to binary search on an array, the time complexity on average is O($log{n}$). However, this only applies to binary search trees that are balanced, meaning that for the entire tree and every subtree, the height will be roughly the same and may differ by only 1. If you had a binary search tree where your root node was the smallest or largest value in the tree and each subsequent node was incrementing or decrementing, it would essentially become a linked list because there would only be one straight path to traverse. In the worst case, this is how our tree would be structured and the target would be the leaf node at the bottom level, meaning we would have to traverse the entire tree, visiting each node until we found the leaf node. This would take O(n) time. Both of these time complexities can be expressed as O(h) where h is the height of the tree. This applies to a balanced binary search tree because you would be dividing the problem by 2 for each iteration until you get to the target, making the height of the tree $log{n}$. This also applies to the one-path binary search tree because the height would just be however many elements there are in the tree, which is n.
+
+### BST Insert and Remove
+
+The main advantage of using binary search trees over sorted arrays is that binary search trees can insert and remove elements in O($log{n}$) time (assuming the tree is roughly balanced) whereas arrays do them in O(n) time. 
+
+#### Insertion Implementation
+
+Insertion in a binary search tree works by finding the insertion point of the node we want to add through traversing and comparing values of the new node with the current node. When it gets to a null position in the tree, it will create the node and make it the new child of the current node by returning it to the parent as its left or right pointer depending on the comparison of values between the two nodes. This means that insertion for a binary search tree inserts nodes as leaf nodes. 
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/1aaefff1-baea-4026-b30e-2caebb617d11)
+
+- The first line is the base case of the recursion and is the same as searching. It checks for if the current node is null except that if it is it will return a newly created node with the value passed in. This is going to be the new node we want to insert into the tree once we do get to the bottom of the tree where the insertion point will be.
+- The if-else statements compare the values of the current node with the node we want to insert. If the value of the new node is greater than the current node, it will traverse the right half of the subtree by recursively calling insert on the right child of the current node. The same goes for the left side of the current node if the value of the new node is less than the current node.
+- The last return statement will return the node current node of that iteration of the recursion to the appropriate child of its parent. This basically just returns the same subtree to the root of the entire tree except with the newly inserted node as a new leaf once it works its way back up the tree and returns the root's child node to the root.
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/60d9d686-4fea-4aad-99cf-5be2c847fc40)
+
+#### Removal Implementation
+
+When removing a node, there are two cases we have to consider: the node we want to remove has 0 children or 1 child, and another case where it has 2 children. Similarly to insertion, we will still have to traverse through the tree and search for the target node but instead of creating a node at null we instead remove a node and adjust the tree to replace the removed node. In the first case where the target has 0 or 1 child, we would simply return one of the target value's children, whether it be null if it had 0 children or the only child it has in the 1 child case. In the 2 children case, we would replace the target node with the smallest node in its right subtree, called its in-order successor, because it would preserve both the balance of the tree and the ordered structure of the binary search tree. It would preserve the order because we know that since all values left of the target are going to be smaller than it and all values right of the target are going to be greater, the same will apply to the smallest value of the right subtree. All values left of the replacement node will still be less than it since it was greater than the removed node and all values right of it will still be greater since it was the smallest value in the right subtree.
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c6cb474a-5e7f-4d2b-8f70-8c56019c65a3)
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/14f0e3c5-af9b-47cf-995f-1ac51e11be13)
+
+The top function is a helper function that finds the minimum value in a given tree. This will be used to find the minimum value node of the right subtree of the target node if it has two children. The bottom function is the removal function.
+
+- Minimum Value Node
+    - In the first line, we create a variable curr to keep track of the current node that we're on when traversing through the tree
+    - The while loop traverses through the tree until it finds the minimum value node of the tree. The condition checks if both the current node and its left child are valid nodes, meaning that they aren't null. If they are, it will change curr to be the left child of the current node, traversing the left path of the tree every time because that's where the smallest values will be. Once it reaches a node where the left child is null, it will exit the while loop and return the current node, which should be the minimum value node.
+    - The traversal is done iteratively instead of recursively because we are just following the left path every iteration so it is essentially the same as traversing a linked list, which was also done iteratively.
+
+- Removal
+    - The first line checks if the current node is null and returns a newly created node with the value we want to remove if it is null
+    - The following if-else statements are similar to the insertion algorithm where you compare the target node's value with the current node's value to see which path to traverse. If the target value is greater than the current value, it will recursively call remove on the right child of the current node and return the result on the right child. The same goes for the left side if the target value is less than the current value. Returning the result serves the same purpose as in the insertion, which reconstructs the tree with the target node removed. If neither of these conditions are met, that means we are at the target node and we can begin the removal process.
+      - The first two if-else statements check if the left and right children exist. If the left child does not exist, it will return the right child. Then it checks if the right child exists and if it doesn't, it will return the left child. These two if-else statements handle case 1 where the target node has 0 or 1 child because if the left doesn't exist, the target will have at most 1 child if the right exists and the same goes for the second condition.
+      - The last else statement handles case 2 where the target node has 2 children. First, it finds the minimum value node of the right subtree and saves it as a variable to use later. It then replaces the current node's value with the min value node and then runs the remove function on the right child of the new replacement node to remove the old minimum value node. 

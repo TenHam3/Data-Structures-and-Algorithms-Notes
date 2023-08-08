@@ -553,3 +553,7 @@ Languages like Java and C++ have built-in TreeMaps but languages such as Python 
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c5c5437c-03e5-403e-aee4-5250fc322cc0)
 
+## Backtracking
+
+### Tree Maze
+

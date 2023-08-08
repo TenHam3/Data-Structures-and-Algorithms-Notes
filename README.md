@@ -489,3 +489,67 @@ The top function is a helper function that finds the minimum value in a given tr
 #### Time Complexity 
 
 The time complexity for both insertion and removal depends on the height, just like searching. This makes sense because the main bulk of the algorithm is finding the insertion/removal point by traversing through the tree and since the time complexity of searching is O(h), this is also the time complexity of insertion and removal. If the tree is balanced, the height will be $log{n}$ for a similar reason to merge sort. In merge sort, the height of the decision tree was $log{n}$ because it was based on how many times the array could be split in half until we get to 1. In a similar vein, the height of a binary search tree is based on how many times you can divide the bottom level until you get to one node, which would be the root node. However, as stated earlier with search, the worst case scenario is when the tree is unbalanced and is either left or right-skewed, making these operations operate in O(n) time.
+
+### Depth-First Search
+
+Depth-first search (DFS) is a traversal algorithm for trees that works by traversing down the tree first before moving laterally, prioritizing depth over breadth. The goal is to reach as deep as possible in the tree for every path that leads to a leaf node before searching all nodes on the same level as the nodes visited further up. There are three ways of implementing depth-first search: inorder, preorder, and postorder. For binary search trees, the inorder traversal is when you visit the left subtrees of a node, the node itself, and the right subtrees in that order to visit every node in sorted order. This is because of the organization of nodes in a binary search tree where all descendants left of a node are less than it and all descendants right of it are greater than it so going down and left of the tree would give you the lowest value and working your way up and right will visit the nodes in order. The preorder traversal that prioritizes left before right is when you visit the node itself first, then the left subtree, and then the right subtree. The postorder traversal that prioritizes left before right is when you visit the left subtree, then the right subtree, and then the node itself. This has a recursive solution because the algorithm breaks down the traversal process by exploring the left and right subtrees of every node.
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/68bef3f2-5f08-43ef-97cc-ca845d43d89d)
+
+- The first line is the base case that checks if the current node is null and returns if it is. This means that when the algorithm reaches a leaf node, it will first try and explore its left subtree and return since its left child is null. It will then use the leaf node itself in some way (printing in this implementation) and then try and explore the right subtree and return since it's also null. 
+- The next lines execute the traversal part of the algorithm, recursively calling the function on the left child of the node first since this is an inorder implementation. The next line is printing the current node that the call stack is on. The final line recursively calls the function on the right child to explore the right subtree.
+- For the preorder and postorder implementations, you would just need to switch the order in which you print the current node and recursively search its children. For preorder, you would print the value first, then recursively call the function on its left child, and then its right child. For postorder, you would recursively call the function on its left child, then its right, and then print out the current node's value.
+
+#### Visualization of Inorder Traversal
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/d0ee3850-4650-418d-8e66-be8a6022ee48)
+
+#### Visualization of Preorder Traversal
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/43f42d21-0a99-432d-8dd4-6f931c9634b9)
+
+#### Visualization of Postorder Traversal
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/b25ee512-9568-4d20-81c9-6706090cdc7e)
+
+#### Time Complexity
+
+Since all we are doing is visiting every node, this algorithm has O(n) time complexity. However, if we were to apply DFS to a scenario like where we have to build a sorted array out of values given in random order without a binary search tree of those values already given, we would first have to build the binary search tree and then apply DFS to add them to the array. Building the tree would mean inserting n elements into the tree and since insertion into a binary search tree takes $log{n}$ time, building the tree would take O($nlog{n}$) time. Then you have to add on the time it takes to apply DFS to put the elements into an array, taking O(n) time. Adding these two operations together, the time complexity for this scenario would be O($nlog{n} + n$) but since $nlog{n}$ grows much faster than n, we can treat the added time complexity of the DFS as a constant and disregard it, leaving the final time complexity as O($nlog{n}$). Another way to look at it is to look at an example of something we've already seen.
+If the time complexity was O($2nlog{n}$) it would be the same as saying O($nlog{n} + nlog{n}$) and since we ignore constants when they multiply or add to variables, the time complexity simplifies to O($nlog{n}$). $nlog{n}$ is greater than n so since the time complexity of O($nlog{n} + nlog{n}$) simplifies down to O($nlog{n}$), then O($nlog{n} + n$) would also simplify down to O($nlog{n}$). In general, when there are time complexities where there are multiple different operations happening to a variable added together, we only care about the largest term because it would grow the fastest and it would simplify down to just the largest term for the same reasons as if it were multiplied by a constant. 
+
+### Breadth-First Search
+
+Breadth-first search (BFS) is a traversal algorithm for trees that traverses all nodes on the same level first before going down the tree to the next level, prioritizing breadth over depth. This is also called level-order traversal because we are going level by level down the tree. When traversing the tree using BFS, you usually go from left to right for each level so you would process the leftmost node from that layer first and end at the rightmost node, but if you want to do that for every level, you can't recursively call the function on the leftmost node's children if you end at the right node and want to maintain the same ordered traversal for the next level so recursion is not used for BFS. Rather, you can do it iteratively by maintaining a queue to keep track of which nodes to visit next. For any particular level, you would first process the leftmost node, add its children to the queue, and then move on to the next node in the level, which would automatically be the next in line in the queue and repeat the same process until the entire level has been processed. 
+
+#### Implementation 
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/1fcbc30e-ff92-4077-8186-e01768d16667)
+
+- The first line constructs the queue that will keep track of the nodes that have yet to be visited
+- The next line checks if the root exists and pushes it to the queue if it does
+- The next line makes a level variable to keep track of how many levels we have traversed
+- The next lines are where the traversal happens. The while loop conditions checks for if the queue is nonempty, which would mean we still have elements to traverse.
+    - First, it prints out the current level that is being traversed and initializes a length variable to keep track of the initial size of the queue before the level was traversed since the size changes after enqueuing and dequeuing during the traversal of that level. The for loop iterates the number of times equal to the length that was initialized.
+        - The for loop first initializes a pointer that points to the current node being processed, which would be the first node in the queue
+        - It then pops that element from the queue and prints out its value
+        - Then there are two if-statements that check if that node had a left and right child. If it does have children, we would push it onto the queue, prioritizing the left child first since we want to traverse each level from left to right.
+    - After the level has been fully traversed, it increments the level variable and goes to the next iteration of the while loop, which would be the next level of the tree
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/d40c5b62-5683-4cca-ad0d-6fa5292cb1b4)
+
+#### Time Complexity
+
+Similarly to bucket sort, even though we have a nested loop in the code, all we did was visit every node and perform a simple operation on each of them, which means it takes O(n) time. Technically, the time complexity is O($cn$) where c represents the number of operations you perform per node, but since this is a constant we can disregard it and the time complexity still comes out to be O(n). 
+
+### BST Sets and Maps
+
+Sets and maps, similar to stacks and queues, are interfaces that can be implemented using trees. Implementing them with trees allows for O($log{n}$) time for operations. Sets are data structures that have unique elements and implementing them with binary search trees ensures that they are stored in order while still having O($log{n}$) time for operations, unlike arrays where the operations take O(n) time. Maps are data structures that operate on key-value pairs. Each element is a key that has a value mapped to it. For example, a phonebook has a list of names sorted in alphabetical order. These are the keys. Each name has an associated phone number mapped to them, which serves as the value. The key-value pair in this example would be the name and corresponding phone number with that name. Implementing a map with a binary search tree also allows for O($log{n}$) time for operations and ensures a sorted order, much like the alphabetized order in a phonebook. Each key could have any value mapped to it such as an integer, string, object, etc., and can also have multiple values associated with it.
+
+Languages like Java and C++ have built-in TreeMaps but languages such as Python and JavaScript require you to import an external library to gain access to such data structures. Here is the declaration of a built-in TreeMap in C++:
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c5c5437c-03e5-403e-aee4-5250fc322cc0)
+

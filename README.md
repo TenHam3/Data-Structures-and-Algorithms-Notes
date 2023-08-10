@@ -557,3 +557,46 @@ Languages like Java and C++ have built-in TreeMaps but languages such as Python 
 
 ### Tree Maze
 
+The backtracking algorithm is similar to the DFS algorithm in that it searches each path of a leaf node using DFS to search for a particular solution to a given problem. This is usually a brute-force approach when there is no other efficient way of doing it. 
+
+#### Example Problem
+An example of an application for backtracking is finding a path from the root to a leaf node that does not contain a 0 in it. For this problem, we would be running the algorithm on a binary tree instead of a binary search tree. You would use DFS to search each path to a leaf node until you reach a zero or find a path to a leaf node without a 0 in it. If the current path being searched has a 0 in it, the algorithm will backtrack to another path that was skipped earlier on in the decision tree. This is similar to a maze where you go in a certain direction or path until you hit a dead end, at which point you backtrack to other possible paths you could have taken until you reach the end of the maze. Since we are using DFS to traverse the tree, we will have to use a recursive solution, which means we need at least one base case. For this problem, there are a couple base cases. The first is if the tree is empty, meaning there is no root node, or the root node is 0 since that would mean that there are no possible paths that don't contain 0. The second is if you have reached a leaf node that was nonzero without returning false up to that point, you can return True to signify that you have found a path to a leaf node without 0 since if you did reach a node in the path with 0, you would've returned False and backtracked to another path. 
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/48ac00f5-1eb6-4c1b-9f95-497a72b7584a)
+
+- The class at the top is an implementation of the binary tree node
+- The first if-statement for the backtracking function covers the first base case where the root is either null, meaning the tree is empty, or if the root node's value is 0, returning False if either is true
+- The second if-statement covers the second base case that checks whether the current node is a leaf node by checking if both children are null, returning True if it is a leaf node
+- The next two if-statements implement the DFS traversal portion of the algorithm, recursively calling the function on the left child, then the right child to see if either the left or right subtrees contain a path to a leaf node without a 0 in it
+- The return statement at the end returns false since if we reached a leaf node that contained 0, it would get past the two recursive calls on its children and we would want to return false in this case since there is a 0 in the path
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/102f4676-b7f4-4cc3-b5fd-8eec9f993155)
+
+#### Variation of the Problem
+
+If the problem instead asked to fill an array of all the values of the nodes in a valid path instead of just returning a boolean, we would have to alter the solution a bit. 
+
+#### Implementation of Array Variation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/4fa4eda2-4624-4210-a509-df2c54fd9d1f)
+
+- The code will be mostly the same except we pass in a path array that will allow us to keep track of the values of the current path we are traversing and will be the same array that will have the values of a valid path without 0's in it if one exists
+- The return value of the function is still a boolean because that will allow us to tell when the algorithm should backtrack and when there is a valid path or not
+- The first if-statement is the same, checking the first base case
+- The next line adds the root node to the path because if it passed the base case in the lines before, the root node will always be a valid node in the path and thus can be added to the path array
+- The next if-statement checks for the second base case
+- The next two if-statements are the same as before, recursively traversing the tree to see if there is a valid path
+- The next line pops the latest element from the array since if it passes through the previous two if-statements that traversed the tree, it means that the path was invalid and the current node of that iteration of the recursion needs to be removed from the array. The path would be invalid because if it wasn't, it would've returned True all the way up the call stack to the root node and it would never go down to this line to pop the nodes. This also means that if both the left and right subtrees of the root node have been traversed and the algorithm moves onto this line, that means both subtrees have returned false and it will pop the root node off the array, signifying that there is no valid path that exists in the tree.
+- The last line is the same return statement as the previous implementation, returning false in case a leaf node containing 0 existed and it was not caught earlier
+
+#### Visualization of Array Variation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/56ff08ff-548e-4299-a46f-e84f4d14b630)
+
+#### Time Complexity
+
+Since in the worst case we would have to traverse through the entire tree to find a valid path, the time complexity of this algorithm would be O(n). This is usually the case for backtracking algorithms since it is meant to be a brute-force approach and is meant to run over all possibilities of the problem. In this case, it would be all possible paths of the tree.

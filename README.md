@@ -600,3 +600,79 @@ If the problem instead asked to fill an array of all the values of the nodes in 
 #### Time Complexity
 
 Since in the worst case we would have to traverse through the entire tree to find a valid path, the time complexity of this algorithm would be O(n). This is usually the case for backtracking algorithms since it is meant to be a brute-force approach and is meant to run over all possibilities of the problem. In this case, it would be all possible paths of the tree.
+
+## Heap / Priority Queue
+
+### Heap Properties
+
+Heaps/Priority Queues are the same type of data structure. They are ordered and complete binary trees where each node's descendants all have values greater than it or less than it depending on if it is a min heap or max heap. Heaps are sometimes called priority queues because values will be put into a queue-like order when being added or removed and are prioritized based on their relative value, which is being smaller or larger. Heaps need to maintain two properties: structure and order. The structure property comes from the fact that they have to be complete binary trees, meaning that each level has to be full of nodes excluding the bottom level. This also means that the bottommost level has to be completed before adding children to any of the bottom-level nodes. The order property is the way in which values are prioritized. Unlike binary search trees, heaps can have duplicate elements. In a min heap, smaller values have more priority, meaning that they will be the first ones out, and each node's descendants will all be greater than or equal to it. In a max heap, larger values have more priority and each node's descendants will be less than or equal to it. In this section, we are going to focus on min heaps.
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/e00baae9-fc06-4061-bf68-b44a72444759)
+
+Even though heaps are visually represented as binary trees, they are implemented using arrays rather than nodes and pointers. Elements in the array also start at index 1 rather than index 0. This is because it makes it easier to travel to the children or parent of a given node. Using a few formulas, you can jump from a parent node to either of its children or from a child node to its parent. 
+- $leftChild = 2i$
+- $rightChild = 2i + 1$
+- $parent = i/2$
+
+i is the index of the node you are at. This will always be the case because the heap is a completed tree so there won't be any holes in any level. If it weren't a complete tree, some indices may not have an element and you would be trying to access a null element if there was a hole in that index. The contiguous structure of arrays also fits well for this structure since the completeness ensures that there aren't these types of holes and instead the elements are stored one after another. This is also why the root node is at index 1 instead of 0 because the formulas wouldn't work on the root node if it started at 0. Elements in the array are arranged in the same order as they would be searched in BFS (level by level, left to right). Dividing by 2 takes you from one node to its parent because in either case, whether it is a left or right child, dividing both equations by 2 results in you being at the parent index i. If you are at a right child, dividing the entire expression by 2 cancels out the 2 in $2i$ and $1/2$ truncates down to 0, resulting in you being at index $i + 0 = i$. 
+
+#### Visualization of Heaps
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/19080b80-4d03-43eb-91c7-2d0b8e766d2d)
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/6f8a2ec0-d10a-4f56-bd66-901dc72fc979)
+
+#### Visualization of Going From One Node to its Children and Parent
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c034d53f-8be1-41d9-b538-3297635b10b0)
+
+### Push and Pop
+
+#### Push
+Pushing an element onto a heap includes pushing the element into the end of the array so that it first gets inserted into the last level, preserving the structure property, and continuously swapping the element with its parent until the order property is preserved. This process of repeatedly swapping the elements with another node is called percolating. In this case, we are percolating up since we are swapping the nodes with their parents. 
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/dece080b-5a92-452f-ae53-0db2536b584d)
+
+- The first line pushes the element to the end of the array
+- The next line initializes the index i to be at the same index that the element was pushed to
+- The while loop is where the percolation occurs. The loop condition if i is greater than 1 and if the element that was pushed is smaller than its parent. Index i has to be greater than 1 because if i was 1, dividing by 2 would truncate it down to 0, which is an invalid index for heaps since we ignore that position.
+    - The percolation algorithm starts by swapping the pushed element with its parent
+    - It then divides i by 2 using integer division so that it points to the new index of the pushed element
+ 
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/67b8c928-c80a-4a0c-b1ee-ec4757ba085e)
+
+#### Pop
+
+Popping involves removing and replacing the element at index 1 with the last element in the array and percolating it down with the minimum of its two children until the order property is maintained. If you were to just pop the first element off and replace it with the minimum of its two children and repeat this process for each of the replacement nodes, you would be introducing a hole in the last level you took an element from, which would violate the structure property of heaps. 
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/bb97ef34-2f89-4885-987a-8bb50727daba)
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/98147b23-da3e-4197-97bf-67fe93b6dea8)
+
+- The first if-statement checks if the heap is empty. The heap would be empty if the array was of size 1 instead of size 0 because the zeroth index is not used in the heap but still counted in the array size.
+- The next if-statement checks if the heap is only 1 node and pops and returns it if so
+- The next few lines save the root node, replace the root node with the last node, pop the last node off the array, and initializes the index i to 1.
+- The while loop is where the downward percolation occurs. The condition checks if the current node has a child to percolate to. It checks specifically for the left child because it can't have a right child without a left child because of the complete structure property. If there was a right child without a left child, that would create a hole in that level.
+    - There are three cases to consider for the percolation process: if the current node needs to swap with the right child, the left child, or no swap is needed and it is in the correct position. If it has both children, you choose to percolate down the path that has the minimum value of the two children. If the current node only has a left child then you just compare the current node with its child and swap them if needed. If the current node has no children, the element is where it needs to be and the percolation ends. This is automatically checked in the while loop condition. 
+    - The first if-statement checks three conditions and covers case 1. It checks if the right child exists, if the right child has a smaller value than the left child, and if the current node's value is greater than the right child. If all of these conditions are met, it will choose to percolate down the right path and swap with the right child. It will also update i to point at the right child's index.
+    - The second if-statement checks if the current node's value is less than the left child, covering the second case. If this condition is satisfied, it swaps with the left child and updates i to point at that index.
+    - The else statement takes care of case 3 when the current node's value is smaller than both its children's values. In this case, it means that the current node is already in the correct position and thus the program breaks from the while loop. This also executes if it only has the left child and is smaller than it.
+- Once the while loop is finished, that means the replacement node is in the correct position and it returns the original root node
+
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/ea3f645b-13ef-49fd-867b-e8ed1351151e)
+
+#### Time Complexity
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c5d5631f-a913-4593-9f68-f98676b7f028)
+
+Getting the min/max of the heap is basically just accessing the root node and access in an array takes O(1) time so the time complexity of getting the min/max of the heap is also O(1). The time complexity for both push and pop would be O($log{n}$) because in the worst case for both, you would have to percolate through the entire height of the tree and since the tree is always balanced, the height will always be $log{n}$. 

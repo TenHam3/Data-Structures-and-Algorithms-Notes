@@ -87,9 +87,9 @@ Linked lists are a series of nodes connected by pointers
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c167cfde-5a64-4604-b3c2-96bc5903a612)
 
-![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/3da1bdcb-7d43-4d75-ab43-3a346c3348e1)
+![image](https:github.comTenHam3Data-Structures-and-Algorithms-Notesassets1097058113da1bdcb-7d43-4d75-ab43-3a346c3348e1)
 
-- The first line of code uses the "tail" variable/reference to set the next pointer of node 3 to the newly added node
+- The first line of code uses the "tail" variablereference to set the next pointer of node 3 to the newly added node
 - The second line makes the tail variable reference the newly added node to signify that it is the new tail of the linked list
   - This can also be done by using tail = tail->next;
   - Because the tail variable still references the 3rd node, setting tail to tail->next makes the tail variable follow the 3rd node's new next pointer that points to the 4th node, making the tail pointer now reference the 4th node
@@ -103,7 +103,7 @@ Linked lists are a series of nodes connected by pointers
 
  #### Insertion and Removal
  - Insertion is similar to how you would insert a node at the end of a singly linked list except you now have to update the new node's previous pointer to point at the previous tail node
-![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0abf4c2e-29b1-4a1a-9a37-f9e761158bb3)
+![image](https:/github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0abf4c2e-29b1-4a1a-9a37-f9e761158bb3)
   - The first line of code makes the previous tail's next pointer point to the newly added node. Then the new node's previous pointer is set to point at the previous tail node. Finally, the tail pointer gets set to point at the newly added node.
 - Removing the tail node of a doubly linked list is also similar except the previous pointers make it easier since you can just follow the tail node's previous pointer to get to the new tail of the linked list
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/e0328c83-62db-4d5f-89ff-3a2cd0a3eef1)
@@ -372,7 +372,7 @@ Binary search can be implemented using recursion or iteration but iteration is s
 
 #### Time and Space Complexity
 
-Similar to merge sort, we are dividing the problem in half for each iteration that we execute binary search on the array. In the worst case scenario where the search space gets reduced all the way down to a size 1 subarray, it would take O($log{n}$) time since that's how many times you can divide the array in half until you get to size 1. Since our implementation didn't allocate extra memory to create the subarrays and instead only created a few pointers, the space complexity would be O(1).
+Similar to merge sort, we are dividing the problem in half for each iteration that we execute binary search on the array. In the worst case scenario where the search space gets reduced all the way down to a size 1 subarray, it would take O($\log{n}$) time since that's how many times you can divide the array in half until you get to size 1. Since our implementation didn't allocate extra memory to create the subarrays and instead only created a few pointers, the space complexity would be O(1).
 
 ### Search Range
 
@@ -393,7 +393,7 @@ Binary search algorithm that uses the helper function to determine where to sear
 
 #### Time Complexity
 
-Just like the previous section of binary search, we are cutting the problem down in half each iteration so the time complexity of executing binary search on a range would be O($log{n}$) where n is the range instead of array size
+Just like the previous section of binary search, we are cutting the problem down in half each iteration so the time complexity of executing binary search on a range would be O($\log{n}$) where n is the range instead of array size
 
 ## Trees
 
@@ -421,7 +421,7 @@ Binary Search Trees are a special type of binary trees that are sorted in a cert
 
 #### Benefit of Binary Search Trees
 
-The benefit of a binary search tree is the same as having a sorted array. Searching for an element in a binary search tree is more efficient and will take O($log{n}$) time on average, just like how arrays can run binary search in O($log{n}$) time.
+The benefit of a binary search tree is the same as having a sorted array. Searching for an element in a binary search tree is more efficient and will take O($\log{n}$) time on average, just like how arrays can run binary search in O($\log{n}$) time.
 
 Because of the way binary search trees are structured, the algorithm for searching for an element in a binary search tree is similar to how binary search on an array functions, where it splits the problem in half every time. For binary search trees, instead of moving to different indices and tightening the boundaries, you can just follow whichever path is necessary to find the element based on the comparison of the target value and the current node's value. The property of binary search trees that order them makes this easy because you can take the left path if the target value is smaller than the current node's value, since all node values left of the current node are smaller, or the right path if the target value is greater than the current node's value since all node values right of the current node are larger.
 
@@ -437,11 +437,11 @@ Searching a binary search tree can be done recursively or iteratively but the re
 
 #### Time Complexity
 
-Since this functions similarly to binary search on an array, the time complexity on average is O($log{n}$). However, this only applies to binary search trees that are balanced, meaning that for the entire tree and every subtree, the height will be roughly the same and may differ by only 1. If you had a binary search tree where your root node was the smallest or largest value in the tree and each subsequent node was incrementing or decrementing, it would essentially become a linked list because there would only be one straight path to traverse. In the worst case, this is how our tree would be structured and the target would be the leaf node at the bottom level, meaning we would have to traverse the entire tree, visiting each node until we found the leaf node. This would take O(n) time. Both of these time complexities can be expressed as O(h) where h is the height of the tree. This applies to a balanced binary search tree because you would be dividing the problem by 2 for each iteration until you get to the target, making the height of the tree $log{n}$. This also applies to the one-path binary search tree because the height would just be however many elements there are in the tree, which is n.
+Since this functions similarly to binary search on an array, the time complexity on average is O($\log{n}$). However, this only applies to binary search trees that are balanced, meaning that for the entire tree and every subtree, the height will be roughly the same and may differ by only 1. If you had a binary search tree where your root node was the smallest or largest value in the tree and each subsequent node was incrementing or decrementing, it would essentially become a linked list because there would only be one straight path to traverse. In the worst case, this is how our tree would be structured and the target would be the leaf node at the bottom level, meaning we would have to traverse the entire tree, visiting each node until we found the leaf node. This would take O(n) time. Both of these time complexities can be expressed as O(h) where h is the height of the tree. This applies to a balanced binary search tree because you would be dividing the problem by 2 for each iteration until you get to the target, making the height of the tree $\log{n}$. This also applies to the one-path binary search tree because the height would just be however many elements there are in the tree, which is n.
 
 ### BST Insert and Remove
 
-The main advantage of using binary search trees over sorted arrays is that binary search trees can insert and remove elements in O($log{n}$) time (assuming the tree is roughly balanced) whereas arrays do them in O(n) time. 
+The main advantage of using binary search trees over sorted arrays is that binary search trees can insert and remove elements in O($\log{n}$) time (assuming the tree is roughly balanced) whereas arrays do them in O(n) time. 
 
 #### Insertion Implementation
 
@@ -488,7 +488,7 @@ The top function is a helper function that finds the minimum value in a given tr
 
 #### Time Complexity 
 
-The time complexity for both insertion and removal depends on the height, just like searching. This makes sense because the main bulk of the algorithm is finding the insertion/removal point by traversing through the tree and since the time complexity of searching is O(h), this is also the time complexity of insertion and removal. If the tree is balanced, the height will be $log{n}$ for a similar reason to merge sort. In merge sort, the height of the decision tree was $log{n}$ because it was based on how many times the array could be split in half until we get to 1. In a similar vein, the height of a binary search tree is based on how many times you can divide the bottom level until you get to one node, which would be the root node. However, as stated earlier with search, the worst case scenario is when the tree is unbalanced and is either left or right-skewed, making these operations operate in O(n) time.
+The time complexity for both insertion and removal depends on the height, just like searching. This makes sense because the main bulk of the algorithm is finding the insertion/removal point by traversing through the tree and since the time complexity of searching is O(h), this is also the time complexity of insertion and removal. If the tree is balanced, the height will be $\log{n}$ for a similar reason to merge sort. In merge sort, the height of the decision tree was $\log{n}$ because it was based on how many times the array could be split in half until we get to 1. In a similar vein, the height of a binary search tree is based on how many times you can divide the bottom level until you get to one node, which would be the root node. However, as stated earlier with search, the worst case scenario is when the tree is unbalanced and is either left or right-skewed, making these operations operate in O(n) time.
 
 ### Depth-First Search
 
@@ -516,8 +516,8 @@ Depth-first search (DFS) is a traversal algorithm for trees that works by traver
 
 #### Time Complexity
 
-Since all we are doing is visiting every node, this algorithm has O(n) time complexity. However, if we were to apply DFS to a scenario like where we have to build a sorted array out of values given in random order without a binary search tree of those values already given, we would first have to build the binary search tree and then apply DFS to add them to the array. Building the tree would mean inserting n elements into the tree and since insertion into a binary search tree takes $log{n}$ time, building the tree would take O($nlog{n}$) time. Then you have to add on the time it takes to apply DFS to put the elements into an array, taking O(n) time. Adding these two operations together, the time complexity for this scenario would be O($nlog{n} + n$) but since $nlog{n}$ grows much faster than n, we can treat the added time complexity of the DFS as a constant and disregard it, leaving the final time complexity as O($nlog{n}$). Another way to look at it is to look at an example of something we've already seen.
-If the time complexity was O($2nlog{n}$) it would be the same as saying O($nlog{n} + nlog{n}$) and since we ignore constants when they multiply or add to variables, the time complexity simplifies to O($nlog{n}$). $nlog{n}$ is greater than n so since the time complexity of O($nlog{n} + nlog{n}$) simplifies down to O($nlog{n}$), then O($nlog{n} + n$) would also simplify down to O($nlog{n}$). In general, when there are time complexities where there are multiple different operations happening to a variable added together, we only care about the largest term because it would grow the fastest and it would simplify down to just the largest term for the same reasons as if it were multiplied by a constant. 
+Since all we are doing is visiting every node, this algorithm has O(n) time complexity. However, if we were to apply DFS to a scenario like where we have to build a sorted array out of values given in random order without a binary search tree of those values already given, we would first have to build the binary search tree and then apply DFS to add them to the array. Building the tree would mean inserting n elements into the tree and since insertion into a binary search tree takes $\log{n}$ time, building the tree would take O($n\log{n}$) time. Then you have to add on the time it takes to apply DFS to put the elements into an array, taking O(n) time. Adding these two operations together, the time complexity for this scenario would be O($n\log{n} + n$) but since $n\log{n}$ grows much faster than n, we can treat the added time complexity of the DFS as a constant and disregard it, leaving the final time complexity as O($n\log{n}$). Another way to look at it is to look at an example of something we've already seen.
+If the time complexity was O($2n\log{n}$) it would be the same as saying O($n\log{n} + n\log{n}$) and since we ignore constants when they multiply or add to variables, the time complexity simplifies to O($n\log{n}$). $n\log{n}$ is greater than n so since the time complexity of O($n\log{n} + n\log{n}$) simplifies down to O($n\log{n}$), then O($n\log{n} + n$) would also simplify down to O($n\log{n}$). In general, when there are time complexities where there are multiple different operations happening to a variable added together, we only care about the largest term because it would grow the fastest and it would simplify down to just the largest term for the same reasons as if it were multiplied by a constant. 
 
 ### Breadth-First Search
 
@@ -547,7 +547,7 @@ Similarly to bucket sort, even though we have a nested loop in the code, all we 
 
 ### BST Sets and Maps
 
-Sets and maps, similar to stacks and queues, are interfaces that can be implemented using trees. Implementing them with trees allows for O($log{n}$) time for operations. Sets are data structures that have unique elements and implementing them with binary search trees ensures that they are stored in order while still having O($log{n}$) time for operations, unlike arrays where the operations take O(n) time. Maps are data structures that operate on key-value pairs. Each element is a key that has a value mapped to it. For example, a phonebook has a list of names sorted in alphabetical order. These are the keys. Each name has an associated phone number mapped to them, which serves as the value. The key-value pair in this example would be the name and corresponding phone number with that name. Implementing a map with a binary search tree also allows for O($log{n}$) time for operations and ensures a sorted order, much like the alphabetized order in a phonebook. Each key could have any value mapped to it such as an integer, string, object, etc., and can also have multiple values associated with it.
+Sets and maps, similar to stacks and queues, are interfaces that can be implemented using trees. Implementing them with trees allows for O($\log{n}$) time for operations. Sets are data structures that have unique elements and implementing them with binary search trees ensures that they are stored in order while still having O($\log{n}$) time for operations, unlike arrays where the operations take O(n) time. Maps are data structures that operate on key-value pairs. Each element is a key that has a value mapped to it. For example, a phonebook has a list of names sorted in alphabetical order. These are the keys. Each name has an associated phone number mapped to them, which serves as the value. The key-value pair in this example would be the name and corresponding phone number with that name. Implementing a map with a binary search tree also allows for O($\log{n}$) time for operations and ensures a sorted order, much like the alphabetized order in a phonebook. Each key could have any value mapped to it such as an integer, string, object, etc., and can also have multiple values associated with it.
 
 Languages like Java and C++ have built-in TreeMaps but languages such as Python and JavaScript require you to import an external library to gain access to such data structures. Here is the declaration of a built-in TreeMap in C++:
 
@@ -675,4 +675,63 @@ Popping involves removing and replacing the element at index 1 with the last ele
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c5d5631f-a913-4593-9f68-f98676b7f028)
 
-Getting the min/max of the heap is basically just accessing the root node and access in an array takes O(1) time so the time complexity of getting the min/max of the heap is also O(1). The time complexity for both push and pop would be O($log{n}$) because in the worst case for both, you would have to percolate through the entire height of the tree and since the tree is always balanced, the height will always be $log{n}$. 
+Getting the min/max of the heap is basically just accessing the root node and access in an array takes O(1) time so the time complexity of getting the min/max of the heap is also O(1). The time complexity for both push and pop would be O($\log{n}$) because in the worst case for both, you would have to percolate through the entire height of the tree and since the tree is always balanced, the height will always be $\log{n}$. 
+
+### Heapify
+
+Heapify, or build heap, is an algorithm that constructs a heap given a list of values. If you were given an array of values in a random order, heapifying it would turn the array into a min/max heap. The heapifying process first involves moving the element at the zeroth index to the end of the array so that the index is basically ignored and all elements are now in a valid index of the array. Then the algorithm percolates the first half of the array down until they are in the correct position to preserve the order property of a heap. You only have to percolate the first half of the nodes because the other half will not have any children, so they are already in the correct position relative to the others. 
+
+#### Implementation
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/10821f09-9bc6-408f-baee-c46c5f6cd71b)
+
+- The first line moves the element in the zeroth index to the end of the array
+- The next couple of lines initialize the heap and an integer that will point to the last index of the first half of the array because that is where the first non-leaf node will be. This cur index also helps keep track of which node we are currently percolating.
+- The outer while loop runs the percolation process for every node in the first half by checking if the cur index is greater than 0
+    - The next line initializes an index i to keep track of the index of the current node during the percolation process
+    - The inner while loop checks if the current node has a left child to verify that it has a path to possibly percolate down. This section of code is the same as the code in the pop function that percolates the nodes down.
+    - After the percolation process is done, cur is decremented and the algorithm moves on to the next node to be percolated
+ 
+#### Visualization
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/e835a3bb-db97-4e18-8b7c-bf7b53560629)
+
+#### Time Complexity
+
+If there are n nodes in the binary tree, then there are roughly $\frac{n}{2}$ leaf nodes in the tree so we can determine how many levels each node has to percolate down and how much work is done during each node's percolation. Half of the nodes are leaf nodes because heaps are always going to be complete binary trees, meaning that the last level will always be full of leaf nodes and if the last level is full, that means that half of the tree is full of leaf nodes. However, this is true for any heap/complete binary tree. Because the number of nodes doubles each level, the last level is always going to dominate the total number of nodes in the tree, being greater than or equal to the sum of all nodes in every previous level. Going up from the last level, the next lowest level only has to percolate down one level. The next level has to percolate down two and so on, with the root node having to percolate down the entire height of the tree. Percolating down the tree is better than percolating up because there are fewer nodes that have to travel the height of the tree. Percolating down means only the root node would have to travel the entire height, but if you percolated up, you would have to percolate the entire bottom level up the height of the tree. Although the number of nodes that have to percolate decrease as you go up a level, the number of levels those nodes have to percolate increase. This can be encapsulated in a summation formula that will come out to O(n). 
+
+- For the last level, you would not need to percolate them since they are leaf nodes so you would be percolating $\frac{n}{2}$ nodes 0 times. The next lowest level would have half of those nodes and would need to percolate down 1 level, so the total number of operations would be $0 * \frac{n}{2} + 1 * \frac{n}{4}$
+- This pattern will continue, with the incrementing coefficient representing the number of levels you have to percolate down and the number of nodes halving each time so the total number of operations would look like $0 * \frac{n}{2} + 1 * \frac{n}{4}... + h * 1$ where h is the height of the tree
+- This can be encapsulated into a summation:
+
+$\frac{n}{4} \displaystyle\sum_{k=1}^{h} \frac{k}{2^{k-1}}$ 
+
+- n is the total number of nodes in the heap
+- k is the number of levels you have to percolate down
+- h is the height of the tree
+- The coefficient of the summation is $\frac{n}{4}$ because that's how many nodes you have to percolate down for the second to last level. The numerator is k because that's how many times you have to percolate down at any given level. The denominator is $2^{k-1}$ because each level up is half the number of nodes as the level below so the $\frac{n}{4}$ out in front of the summation gets reduced by $2^{k-1}$ depending on what level you are at. Since the series converges to a value, 1, the time complexity would be O($\frac{n}{4}$) and this simplifies down to O(n).
+
+#### Alternative Proof
+
+The formula to calculate the maximum number of nodes at any given height h is $\lceil\frac{n}{2^{h+1}}\rceil$ where n is the number of nodes in the heap. The time complexity of heapifying a node at height h is O(h) (this assumes that the height is measured from the bottom upward and the bottom level starts at height 0). Therefore at any given level of height h, the number of operations performed is $\lceil\frac{n}{2^{h+1}}\rceil * O(h)$. 
+- The total number of operations for heapifying the entire tree is
+
+$\displaystyle\sum_{h=0}^{\log{n}} (\lceil\frac{n}{2^{h+1}}\rceil * O(h))$
+
+- You can break this down and rewrite it as
+
+$\displaystyle\sum_{h=0}^{\log{n}} (\lceil\frac{n}{2^{h} * 2}\rceil * c * h)$
+
+because in Big-O notation you can ignore any arbitrary constant c so rewriting O(h) as c * h allows us to pull out all constants and rewrite the entire expression as
+
+$\frac{c * n}{2} * \displaystyle\sum_{h=0}^{\log{n}} \frac{h}{2^h}$
+
+- This is less than the infinite series
+
+$\displaystyle\sum_{h=0}^{\infty} \frac{n}{2^n}$
+
+because this series is adding more terms and all terms are positive.
+
+- This infinite series converges to 2 so the total time complexity of heapifying the entire tree is
+
+$O(\frac{c * n}{2} * 2) = O(c * n) = O(n)$

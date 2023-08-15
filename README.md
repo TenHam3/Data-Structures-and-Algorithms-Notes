@@ -728,7 +728,7 @@ $\frac{c * n}{2} * \displaystyle\sum_{h=0}^{\log{n}} \frac{h}{2^h}$
 
 - This is less than the infinite series
 
-$\displaystyle\sum_{h=0}^{\infty} \frac{n}{2^n}$
+$\displaystyle\sum_{h=0}^{\infty} \frac{h}{2^h}$
 
 because this series is adding more terms and all terms are positive.
 

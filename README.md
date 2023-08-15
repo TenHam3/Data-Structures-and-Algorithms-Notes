@@ -29,7 +29,7 @@ Static Arrays are fixed size arrays that cannot resize when adding or removing v
 - Insertion/Removal from the end of the array takes O(1) time because the indexing system allows you to instantly write to the last element via its index (removing would mean replacing it with a placeholder value such as 0)
 - Insertion/Removal from the middle takes O(n) time because you may have to shift every element in the array before/after inserting/removing an element (this would happen if you were to insert/remove from the beginning of the array)
 
-![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/0c2c1850-c3f9-4758-9f04-1e4afbb71730)
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/29b01898-b348-49fb-b7cd-7323838fdcf4)
 
 ### Dynamic Arrays
 
@@ -51,7 +51,7 @@ Stacks are LIFO (Last In First Out) data structures that support three operation
 - Peek accesses/reads the element at the top of the stack but doesn't remove it
 - All these operations take O(1) time, which means stacks can be implemented using dynamic arrays since dynamic arrays support all these operations with the same time complexity
 
-![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/836ae469-39aa-442e-8356-8f275097fc3a)
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/f8bf0da2-8693-4f01-9b80-06cca607c798)
 
 - Stacks require a pointer or some way to keep track of the number of elements in the stack so you can maintain where the "top" of the stack is and know where to push/pop/peek the next element
 - Stack operations only work on the topmost element so you cannot add, remove, or access elements from the middle of the stack
@@ -87,7 +87,7 @@ Linked lists are a series of nodes connected by pointers
 
 ![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/c167cfde-5a64-4604-b3c2-96bc5903a612)
 
-![image](https:github.comTenHam3Data-Structures-and-Algorithms-Notesassets1097058113da1bdcb-7d43-4d75-ab43-3a346c3348e1)
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/ca553f59-cdaf-4748-9013-c0f27c505a5b)
 
 - The first line of code uses the "tail" variablereference to set the next pointer of node 3 to the newly added node
 - The second line makes the tail variable reference the newly added node to signify that it is the new tail of the linked list
@@ -124,7 +124,9 @@ Queues are FIFO (First In, First Out) data structures that support two main oper
 - Enqueue is similar to push for stacks, where you add an element to the end of the queue
 - Dequeue is similar to pop for stacks except that you would remove an element from the beginning of the queue to preserve the FIFO structure
 - This means that elements are removed in the same order they were added, hence why it is called a FIFO data structure. The first element that was added is going to be the first element to be removed.
-![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/01595808-4661-4a4d-af40-8322dd54b2d3)
+
+![image](https://github.com/TenHam3/Data-Structures-and-Algorithms-Notes/assets/109705811/6067797c-d8d1-479d-b4df-1ffebcc408f6)
+
 - Just like stacks, these operations are meant to be done in O(1) time
     - Because of the FIFO structure of queues, dequeuing is not typically possible with arrays because when you remove an element from the beginning of the array, you would have to shift all elements down, making dequeuing a O(n) time operation.
 - Linked lists are usually used to implement queues because they can insert at the end and remove from the beginning in O(1) time
